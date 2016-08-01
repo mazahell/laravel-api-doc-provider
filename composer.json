@@ -1,0 +1,32 @@
+{
+  "name": "restio/laravel-api-doc-provider",
+  "description": "Simple package for autogenerate API doc with Laravel framework",
+  "keywords": [
+    "laravel",
+    "provider",
+    "apidoc",
+    "annotations",
+    "autogenerator"
+  ],
+  "type": "library",
+  "require": {
+    "php": ">=5.4",
+    "laravel/framework": "5.2.*",
+    "zeptech/annotations": "^1.1"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "asergey",
+      "email": "ipmazahell@gmail.com",
+      "homepage": "https://github.com/mazahell",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "RestioDocProvider\\": "src/"
+    }
+  }
+}
