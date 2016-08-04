@@ -120,4 +120,29 @@ class DocController extends Controller
         return response(json_encode($postman), 200, ['Content-disposition' => 'attachment; filename=postman-collection.json', 'Content-type' => 'application/json']);
     }
 
+    public function laravelUrls()
+    {
+        $req = Docs::get(['id', 'controller', 'method', 'route'])->toArray();
+        $gr  = [];
+        foreach ($req as $r) {
+            $route_prefix = explode("/", $r['route']);
+            $gr[]         = $route_prefix[1];
+        }
+        $uroutes = array_flip(array_unique($gr));
+        array_walk($uroutes, function (&$val) {
+            $val = [];
+        });
+
+        foreach ($req as $r) {
+            $route_prefix = explode("/", $r['route']);
+            if (array_key_exists($route_prefix[1], $uroutes)) {
+                $key                             = $route_prefix[2];
+                $uroutes[$route_prefix[1]][$key] = url($r['route']);
+            }
+        }
+        $angular_urls = "var API_URLS = " . json_encode($uroutes, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ";" . PHP_EOL;
+        return response($angular_urls, 200, ['Content-disposition' => 'attachment; filename=laravel_urls.js', 'Content-type' => 'text/javascript']);
+    }
+
+
 }

@@ -44,6 +44,10 @@
         <h1><i class="fa fa-download"></i> postman.json</h1>
     </a>
 
+    <a href="{{ route('restio_angular_url') }}" style="top: 150px; font-size: 0.4em;">
+        <h1><i class="fa fa-download"></i> AngularURLs</h1>
+    </a>
+
     <ul class="api-list" ng-class="{ 'smallFont': parts.length > 10 }">
         <li ng-repeat="part in parts"
             ng-click="changePage($event)"
