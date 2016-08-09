@@ -8,7 +8,7 @@ angular
         this.getApiJSON = function () {
             return $http({
                 method: 'GET',
-                url: '/docs/api.json'
+                url: api_url
             });
         };
     })

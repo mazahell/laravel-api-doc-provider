@@ -25,7 +25,7 @@ class RestioDocProvider extends ServiceProvider
             __DIR__ . '/../res/app/Http/Controllers/ExampleController.php' => app_path("Http/Controllers/ExampleController.php"),
 
             // Dirs
-            __DIR__ . '/../res/public/api'                                 => base_path("public/api"),
+            __DIR__ . '/../res/public/api'                                 => base_path("public/restio_api"),
             __DIR__ . '/../res/database/migrations/docs.php'               => database_path("migrations/2016_07_01_000000_create_docs_table.php"),
             __DIR__ . '/../res/storage/api_docs'                           => storage_path("api_docs"),
         ]);

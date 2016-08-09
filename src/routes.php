@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
  * Use prefix for hide real URL in custom projects
  */
 Route::group(['prefix' => config("restio_doc.route_prefix", "")], function () {
-    Route::get("docs", "RestioDocProvider\\Controllers\\DocController@docs");
+    Route::get("docs", "RestioDocProvider\\Controllers\\DocController@docs")->name("restio_docs");
     Route::get("docs/generate", "RestioDocProvider\\Controllers\\DocController@generate_docs")->name("generate_docs");
     Route::get('docs/postman.json', "RestioDocProvider\\Controllers\\DocController@exportPostman")->name("docs_postman");
     Route::get('docs/api.json', 'RestioDocProvider\\Controllers\\DocController@apiJSON')->name("docs_json");

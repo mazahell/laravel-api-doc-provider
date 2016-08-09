@@ -4,6 +4,7 @@ namespace RestioDocProvider\Controllers;
 
 use App\Models\Docs;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Artisan;
 
 class DocController extends Controller
 {
@@ -48,7 +49,7 @@ class DocController extends Controller
         }
         $response = [
             'apiName' => config("restio_doc.api_name", "Your APINAME"),
-            'parts'   => $parts
+            'parts'   => $parts,
         ];
 
         return response()->json($response);
@@ -107,9 +108,9 @@ class DocController extends Controller
         }
         $postman = [
             'id'        => $collection_id,
-            'name'      => env('SITE_TITLE'),
+            'name'      => config("restio_doc.api_name", "Your APINAME"),
             'timestamp' => time(),
-            'requests'  => $requests
+            'requests'  => $requests,
         ];
 
         // Response from CLI interafce (for write postman collection)
@@ -141,7 +142,21 @@ class DocController extends Controller
             }
         }
         $angular_urls = "var API_URLS = " . json_encode($uroutes, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ";" . PHP_EOL;
+
         return response($angular_urls, 200, ['Content-disposition' => 'attachment; filename=laravel_urls.js', 'Content-type' => 'text/javascript']);
+    }
+
+    public function generate_docs()
+    {
+        $param = null;
+        try {
+            Artisan::call("generate:docs");
+            $param = "true";
+        } catch (\Exception $e) {
+            $param = "false";
+        }
+
+        return redirect(route("restio_docs") . "?" . $param);
     }
 
 
