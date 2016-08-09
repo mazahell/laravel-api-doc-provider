@@ -18,7 +18,7 @@ return [
     /**
      * Usage Default routes
      */
-    'usage_default_routes'          => true,
+    'usage_default_routes'          => false,
     /**
      * Use postman exportFile
      */
