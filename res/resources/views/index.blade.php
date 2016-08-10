@@ -118,7 +118,7 @@
                             </code>
                         </pre>
                 <div class="show-more-btn" ng-click="clickShowMoreCode($event)">
-                    <img ng-src="{{ url('api/img') }}/<% showCodeState %>" alt="down arrow">
+                    <img ng-src="{{ url('restio_api/img') }}/<% showCodeState %>" alt="down arrow">
                 </div>
             </div>
             <div class="mini-footer"></div>
