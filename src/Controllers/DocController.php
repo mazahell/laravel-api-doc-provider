@@ -134,13 +134,20 @@ class DocController extends Controller
             $val = [];
         });
 
-        foreach ($req as $r) {
-            $route_prefix = explode("/", $r['route']);
-            if (array_key_exists($route_prefix[1], $uroutes)) {
-                $key                             = $route_prefix[2];
-                $uroutes[$route_prefix[1]][$key] = url($r['route']);
+        foreach ($req as $key => $r) {
+            $arr_sergments = array_values(array_filter(explode("/", $r['route'])));
+            $route_key     = $arr_sergments[0];
+            if (array_key_exists($route_key, $uroutes)) {
+                if ($arr_sergments[0] == $route_key) {
+                    $arr_sergments[0] = "_";
+                }
+                if (count($arr_sergments) >= 2) {
+                    unset($arr_sergments[0]);
+                }
+                $uroutes[$route_key][implode("_", $arr_sergments)] = url($r['route']);
             }
         }
+
         $angular_urls = "var API_URLS = " . json_encode($uroutes, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ";" . PHP_EOL;
 
         return response($angular_urls, 200, ['Content-disposition' => 'attachment; filename=laravel_urls.js', 'Content-type' => 'text/javascript']);
