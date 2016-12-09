@@ -11,7 +11,7 @@
   "type": "library",
   "require": {
     "php": ">=5.4",
-    "laravel/framework": "5.2.*",
+    "laravel/framework": "5.*",
     "zeptech/annotations": "^1.1"
   },
   "license": "MIT",
