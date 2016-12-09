@@ -1,5 +1,5 @@
 ## laravel-api-doc-provider
-Simple API Doc generator based on Controller Annotations using with Laravel 5.2.*
+Simple API Doc generator based on Controller Annotations using with Laravel 5.2.* | 5.3.*
 
 Install by steps:
 #### Update your composer via command:
