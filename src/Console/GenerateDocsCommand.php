@@ -93,14 +93,10 @@ class GenerateDocsCommand extends Command
             
             foreach ($methodAnnotations as $annotation) {
 
-                if (isset($annotation['description'])
-                    && isset($annotation['route'])
-                    && isset($annotation['required_params'])
-                    && isset($annotation['optional_params'])
-                ) {
+                if (isset($annotation['route']) && isset($annotation['description'])) {
 
-                    $req_params = is_array($annotation['required_params']) ? $this->prepareParams($annotation['required_params']) : [];
-                    $opt_params = is_array($annotation['optional_params']) ? $this->prepareParams($annotation['optional_params']) : [];
+                    $req_params = (isset($annotation['required_params']) && is_array($annotation['required_params'])) ? $this->prepareParams($annotation['required_params']) : [];
+                    $opt_params = (isset($annotation['optional_params']) && is_array($annotation['optional_params'])) ? $this->prepareParams($annotation['optional_params']) : [];
 
                     $success_response = file_exists(storage_path("api_docs/") . $annotation['route'] . '.json') ? file_get_contents(storage_path("api_docs/") . $annotation['route'] . '.json') : "__null__";
 
