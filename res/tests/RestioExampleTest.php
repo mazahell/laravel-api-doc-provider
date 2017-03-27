@@ -15,25 +15,26 @@ class RestioExampleTest extends TestCase
 
     public function testExample()
     {
-        $this->json("GET", route("example_index"), ['token' => 'token_1', 'page' => 2]);
+        $res = $this->json("GET", route("example_index"), ['token' => 'token_1', 'page' => 2]);
 
-        $this->assertResponseOk();
-        $this->writeSuccessResponse('example_index');
+        $res->assertStatus(200);
+        $this->writeSuccessResponse('example_index', $res);
     }
 
     /**
      * Autogenerator Restio DOCS
      * Write success Response from API testings
      *
-     * @param $route_name
-     * @param $success_response
+     * @param string $route_name
+     * @param $response \Illuminate\Http\Response
+     * @internal param $success_response
      * TODO::move this method to TestCase for usage in other tests!!!
      */
-    protected function writeSuccessResponse($route_name = '', $success_response = "")
+    protected function writeSuccessResponse($route_name, $res)
     {
-        $success_response = $this->response->getContent() ? $this->response->getContent() : $success_response;
-        if (strlen($route_name) > 0 && strlen($success_response) > 0) {
-            @file_put_contents(storage_path('api_docs/' . $route_name . '.json'), $success_response);
+        $response_body = $res instanceof \Illuminate\Http\Response ? $res->baseResponse->content() : '';
+        if (strlen($route_name) > 0 && strlen($response_body) > 0) {
+            @file_put_contents(storage_path('api_docs/' . $route_name . '.json'), $response_body);
         }
     }
 

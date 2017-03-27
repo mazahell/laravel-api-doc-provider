@@ -76,7 +76,7 @@ class GenerateDocsCommand extends Command
             foreach (Route::getRoutes() as $value) {
                 if ($value->getActionName() != 'Closure') {
                     preg_match("~(([\w]+)@)~i", $value->getActionName(), $m);
-                    $methods = $value->getMethods();
+                    $methods = $value->methods();
                     $keyHead = array_search("HEAD", $methods);
                     if (is_int($keyHead)) {
                         unset($methods[$keyHead]);
@@ -84,7 +84,7 @@ class GenerateDocsCommand extends Command
 
                     $routeNames[$value->getName()] = [
                         'methods'    => implode(" | ", $methods),
-                        'url'        => "/" . $value->getPath(),
+                        'url'        => "/" . $value->uri(),
                         'controller' => preg_replace("~Controller~", "", $m[2])
                     ];
 
