@@ -31,13 +31,20 @@ class DocController extends Controller
             ->orderBy("docs.controller")
             ->get(['docs.controller'])
             ->toArray();
-
         $controllers = array_column($docs_group, 'controller');
         $all_docs    = Docs::get(['controller', 'method', 'route as name', 'description', 'required_params', 'optional_params', 'success_response as response'])->toArray();
+
+        usort(
+            $all_docs,
+            function ($a, $b) {
+                return strnatcmp($a['name'], $b['name']);
+            }
+        );
 
         $parts = [];
         foreach ($controllers as $key => $part) {
             $parts[$key]['name'] = $part;
+
             foreach ($all_docs as $doc) {
                 if ($doc['controller'] == $part) {
                     $doc['required_params'] = json_decode($doc['required_params'], 1);
@@ -47,6 +54,7 @@ class DocController extends Controller
                 }
             }
         }
+
         $response = [
             'apiName' => config("restio_doc.api_name", "Your APINAME"),
             'parts'   => $parts,
@@ -65,7 +73,8 @@ class DocController extends Controller
     {
         $collection_id = str_random(36);
         $requests      = [];
-        $req           = Docs::get()->toArray();
+        $req           = Docs::orderBy("route")->get()->toArray();
+
         foreach ($req as $key => $request) {
 
             $start = 0;
@@ -165,6 +174,4 @@ class DocController extends Controller
 
         return redirect(route("restio_docs") . "?" . $param);
     }
-
-
 }
