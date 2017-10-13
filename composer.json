@@ -28,5 +28,12 @@
     "psr-4": {
       "RestioDocProvider\\": "src/"
     }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "RestioDocProvider\\RestioDocProvider"
+      ]
+    }
   }
 }
